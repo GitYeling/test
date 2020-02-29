@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="student.js"></script>
+</head>
+
+<body>
+    <p style="text-align: center;font-size: 20px;">计应3班学生查询案例</p>
+    <header>
+        <input type="text" id='input' placeholder="请输入姓名或学号">
+        <button onclick="getSingleStudent()">查 询</button>
+    </header>
+    <main>
+        <div class="item">
+            <span class="item_no">20180801</span>
+            <span class="item_name">张三</span>
+            <span class="item_operate">x</span>
+        </div>
+        <div class="item">
+            <span class="item_no">20180802</span>
+            <span class="item_name">李四</span>
+            <span class="item_operate">x</span>
+        </div>
+        <div class="item">
+            <span class="item_no">20180803</span>
+            <span class="item_name">王五</span>
+            <span class="item_operate">x</span>
+        </div>
+
+    </main>
+</body>
+<style>
+    body {
+        background-color: rgb(233, 231, 231);
+    }
+
+    header {
+        margin: 30px auto 0;
+        height: 60px;
+        line-height: 60px;
+        width: 500px;
+        background-color: rgb(46, 46, 46);
+        border-radius: 10px;
+    }
+
+    input {
+        border: 0;
+        margin-left: 10px;
+        width: 400px;
+        height: 40px;
+        font-size: 20px;
+        color: rgb(13, 27, 41);
+    }
+
+    button {
+        border: 0px;
+        width: 70px;
+        height: 40px;
+        font-size: 15px;
+        color: white;
+        background-color: rgb(182, 174, 174);
+    }
+
+    main {
+        padding-top: 1px;
+        margin: 0 auto;
+        height: 400px;
+        width: 480px;
+        background-color: rgb(158, 152, 152);
+        box-shadow: 3px 3px 3px gray;
+    }
+
+    .item {
+        margin-top: 20px;
+        font-size: 20px;
+    }
+
+    .item span {
+        margin-left: 50px;
+    }
+
+    .item .item_name {
+        color: rgb(12, 15, 13);
+    }
+
+    .item .item_operate {
+        margin-left: 150px;
+        color: red;
+        cursor: pointer;
+    }
+</style>
+<script>
+    var allStudent = studentList
+    var main = document.getElementsByTagName('main')[0]
+    loadAllStudent()
+    // 加载所有学生信息
+    function loadAllStudent() {
+        main.innerHTML = ""
+        for (let i = 0; i < allStudent.length; i++) {
+            var item = document.createElement('div')
+            item.className = 'item'
+            item.innerHTML = `
+                    <span class="item_no">${allStudent[i].no}</span>
+                    <span class="item_name">${allStudent[i].name}</span>
+                    <span class="item_operate" onclick="deleteStudent(event)">x</span>
+            `
+            main.appendChild(item)
+        }
+    }
+    // 按姓名或学号查询指定学生
+    function getSingleStudent() {
+        var input = document.getElementById('input')
+        var inputValue = input.value
+
+        if (inputValue === ''){
+            loadAllStudent()
+        }
+
+        for (let i = 0; i < allStudent.length; i++) {
+            if (inputValue === allStudent[i].no || inputValue === allStudent[i].name) {
+                main.innerHTML = ""
+                var item = document.createElement('div')
+                item.className = 'item'
+                item.innerHTML = `
+                    <span class="item_no">${allStudent[i].no}</span>
+                    <span class="item_name">${allStudent[i].name}</span>
+                    <span class="item_operate" onclick="deleteStudent(event)">x</span>
+                 `
+                main.appendChild(item)
+                break;
+            }
+        }
+    }
+    function deleteStudent(event) {
+        var father =  event.target.parentNode;
+        father.innerHTML = ''
+    }
+
+</script>
+</html>
